@@ -1,9 +1,10 @@
 import React from 'react';
 
-function Nominations() {
+function Nominations({ nominatedMovie }) {
   return (
     <>
       <h1>Nominations</h1>
+      <ul>{nominatedMovie}</ul>
     </>
   );
 }
