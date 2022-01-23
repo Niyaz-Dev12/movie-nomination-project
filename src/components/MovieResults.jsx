@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserStore, ACTIONS } from '../store/userStore';
 
-function MovieResults({ movie, searchedMovie, handleNomination }) {
+function MovieResults({ movie }) {
+  const { state, dispatch } = useContext(UserStore);
+
+  const handleNomination = (e, id) => {
+    if (
+      state.nominated.filter((nom) => nom[0].key === e.target.value).length > 0
+    ) {
+      dispatch({ type: ACTIONS.REMOVE_NOMINATION, payload: e.target.value });
+      // const data = [...nominated];
+      // const nominatedList = data.filter((mov) => mov[0].key !== e.target.value);
+      // setNominated([...nominatedList]);
+    } else {
+      dispatch({
+        type: ACTIONS.ADD_NOMINATION,
+        payload: { movieData: movie, id },
+      });
+    }
+  };
+
   let moviesArr;
   if (movie)
     moviesArr = movie.map((mov) => (
@@ -18,7 +37,7 @@ function MovieResults({ movie, searchedMovie, handleNomination }) {
 
   return (
     <div>
-      <h1>Movie Results {searchedMovie && `"${searchedMovie}"`}</h1>
+      <h1>Movie Results {state.searchedMovie && `"${state.searchedMovie}"`}</h1>
       <ul>{moviesArr}</ul>
     </div>
   );

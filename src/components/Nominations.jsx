@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserStore } from '../store/userStore';
 
-function Nominations({ nominatedMovie }) {
+function Nominations() {
+  const { state } = useContext(UserStore);
   return (
     <>
       <h1>Nominations</h1>
-      <ul>{nominatedMovie}</ul>
+      <ul>{state.nominated}</ul>
     </>
   );
 }
